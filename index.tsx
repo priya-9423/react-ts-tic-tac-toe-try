@@ -11,8 +11,8 @@ interface AppState {
 }
 
 class App extends PureComponent<AppProps, AppState> {
-  xWinner:string =""
-  oWinner:string=""
+  xWinner:string =[]
+  oWinner:string=[]
   constructor(props) {
     super(props);
     this.state = {
@@ -45,15 +45,13 @@ class App extends PureComponent<AppProps, AppState> {
   squareClicked = e => {
     if (this.state.xTurn == true) {
       this.state.squareValues[e - 1] = "X";
-      var s=e%3;
-      console.log('s: '+s)
-      this.xWinner.concat(s);
-
+      this.xWinner.push(e%3);
       this.setState({
         xTurn: false        
       });
     } else {
       this.state.squareValues[e - 1] = "O";
+       this.oWinner.push(e%3);
       this.setState({
         xTurn: true,
         oWinner:e%3
@@ -62,21 +60,8 @@ class App extends PureComponent<AppProps, AppState> {
     // console.log(this.state.xTurn);
     // console.log(this.state.squareValues);
     console.log(e);
-    console.log("x :"+this.state.xWinner);
-    console.log("o: "+this.state.oWinner)
-    this.checkIsWinner();
-  };
-
-  checkIsWinner = () => {
-    var strWin = "";
-    for (var i = 0; i < 9; i++) {
-      if (this.state.XTurn) {
-        if (this.state.squareValues[i].contains("O")) strWin.concat(i % 3);
-      } else {
-        if (this.state.squareValues[i] == "X") strWin.concat(i % 3);
-      }
-    }
-    console.log(strWin);
+    console.log("x :"+this.xWinner);
+    console.log("o: "+this.oWinner)
   };
 
   render() {
